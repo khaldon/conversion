@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+
+<form method="POST" class="post-form" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="block">
+    <h2>{% block title %}Convert HTML to PDF          {% endblock title %}</h2>
+    <label for="images" class="drop-container">
+      <span class="drop-title">Drop files here</span>
+      or
+      <input type="file" id="images" accept=".html" name="file" required />
+    </label>
+    <input type="submit" class='button-5'  value="Start">
+    {% if file %}
+    <a href="/media/{{file}}">Download</a>
+    {% endif %}
+  </div>
+</form>
+
+{% endblock content %}
