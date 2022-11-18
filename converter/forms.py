@@ -1,5 +1,5 @@
 from django import forms
 
 
-class HtmlToPdfForm(forms.Form):
+class FileForm(forms.Form):
     file = forms.FileField()
