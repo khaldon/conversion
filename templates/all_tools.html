@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row" style="margin:10px">
+    <div class="col">
+        {% include 'card.html' with converter_name='html2pdf' title="HTML TO PDF Converter" %}
+    </div>
+    <div class="col">
+        {% include 'card.html' with converter_name='docx2html' title="DOCX to HTML Converter" %}
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+
+
+{% endblock content %}

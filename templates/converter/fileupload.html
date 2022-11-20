@@ -10,9 +10,16 @@
       <input type="file" id="images" accept=".{{file_type}}" name="file" required />
     </label>
     <input type="submit" class='button-5'  value="Start">
-    {% if file %}
-    <a href="/media/{{file}}">Download</a>
-    {% endif %}
+
+    {% if filename %}
+    <a href="{% url 'file' path filename %}">Download</a>
+
+    {% endif %} 
+
+ {% comment %}
+  '/home/mk/conversion/media/deedy_resume-word.html'
+  
+ {% endcomment %}  
   </div>
 </form>
 

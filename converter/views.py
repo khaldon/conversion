@@ -1,48 +1,58 @@
 from django.shortcuts import render
 
-from .handle import handle_html2pdf, handle_docx2pdf
+from .handle import handle_html2pdf, handle_docx2html
 from .forms import FileForm
 from django.views.generic import TemplateView
+from django.http import HttpResponse
 
 
 class HomePage(TemplateView):
     template_name = "home.html"
 
 
-def docx2html(request):
+class AllTools(TemplateView):
+    template_name = "all_tools.html"
+
+
+def file_download(request, out_path, filename):
+    with open(out_path.replace("*", "/"), "rb") as f:
+        data = f.read()
+    response = HttpResponse(data, content_type="text/html")
+    response["Content-Disposition"] = 'attachment; filename="{0}"'.format(filename)
+    return response
+
+
+def main_file_convert_handle(
+    request, handle_func, filetype_in, filetype_out, filename_template
+):
     if request.method == "POST":
-        _docx2html = FileForm(request.POST, request.FILES)
-        if _docx2html.is_valid():
-            handle_docx2pdf(request.FILES["file"], "docx", "html")
-            file_name = request.FILES["file"]
-            return render(request, "converter/docx2html/docx2html.html")
+        file_form = FileForm(request.POST, request.FILES)
+        if file_form.is_valid():
+            path = handle_func(request.FILES["file"], filetype_in, filetype_out)
+            filename = str(request.FILES["file"]).replace(filetype_in, filetype_out)
+            path = path[1].replace("/", "*")
+            return render(
+                request,
+                "converter/{0}/{1}.html".format(filename_template, filename_template),
+                {"path": path, "filename": filename},
+            )
         else:
             return render(request, "converter/error.html")
     else:
-        _docx2html = FileForm()
+        file_form = FileForm()
         return render(
-            request, "converter/docx2html/docx2html.html", {"form": _docx2html}
+            request,
+            "converter/{0}/{1}.html".format(filename_template, filename_template),
+            {"form": file_form},
         )
+
+
+def docx2html(request):
+
+    return main_file_convert_handle(
+        request, handle_docx2html, "docx", "html", "docx2html"
+    )
 
 
 def html2pdf(request):
-    if request.method == "POST":
-        _html_to_pdf = FileForm(request.POST, request.FILES)
-        if _html_to_pdf.is_valid():
-            handle_html2pdf(request.FILES["file"], "html", "pdf")
-            file_name = request.FILES["file"]
-            return render(
-                request,
-                "converter/html2pdf/html2pdf.html",
-                {"file": str(file_name).replace("html", "pdf")},
-            )
-        else:
-            return render(
-                request,
-                "converter/error.html",
-            )
-    else:
-        _html_to_pdf = FileForm()
-        return render(
-            request, "converter/html2pdf/html2pdf.html", {"form": _html_to_pdf}
-        )
+    return main_file_convert_handle(request, handle_html2pdf, "html", "pdf", "html2pdf")

@@ -1,12 +1,12 @@
 import os
 import pdfkit
-import aspose.words as aw
+import mammoth
 
 
 def main_handle_file(f, type_convert_from, type_convert_to):
     path_file = os.getcwd() + "/media/" + f.name
     out_path = (
-        os.getcwd() + "/media/pdf/" + f.name.replace(type_convert_from, type_convert_to)
+        os.getcwd() + "/media/" + f.name.replace(type_convert_from, type_convert_to)
     )
     with open(path_file, "wb+") as destination:
         for chunk in f.chunks():
@@ -24,13 +24,22 @@ def handle_html2pdf(f, type_convert_from, type_convert_to):
 
     """
     handle_file = main_handle_file(f, type_convert_from, type_convert_to)
-
+    file_pdf_path = handle_file[0]
+    file_out_path = handle_file[0]
     pdfkit.from_file(
         handle_file[0], handle_file[1], options={"enable-local-file-access": ""}
     )
+    return file_pdf_path, file_out_path
 
 
-def handle_docx2pdf(f, type_convert_from, type_convert_to):
+def handle_docx2html(f, type_convert_from, type_convert_to):
     handle_file = main_handle_file(f, type_convert_from, type_convert_to)
-    doc = aw.Document(handle_file[0])
-    doc.save(handle_file[1])
+    file_docx_path = handle_file[0]
+    file_out_path = handle_file[1]
+    with open(file_docx_path, "rb") as docx_file:
+        result = mammoth.convert_to_html(docx_file)
+        html = result.value
+        out_file = open(file_out_path, "w")
+        out_file.write(html)
+        out_file.close()
+    return file_docx_path, file_out_path
