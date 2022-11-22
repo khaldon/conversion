@@ -1,9 +1,10 @@
 from django.shortcuts import render
-
-from .handle import handle_html2pdf, handle_docx2html
+import os
+from .handle import handle_html2pdf, handle_docx2html, handle_video2avi
 from .forms import FileForm
 from django.views.generic import TemplateView
 from django.http import HttpResponse
+import time
 
 
 class HomePage(TemplateView):
@@ -22,14 +23,13 @@ def file_download(request, out_path, filename):
     return response
 
 
-def main_file_convert_handle(
-    request, handle_func, filetype_in, filetype_out, filename_template
-):
+def main_file_convert_handle(request, handle_func, filetype_out, filename_template):
     if request.method == "POST":
         file_form = FileForm(request.POST, request.FILES)
         if file_form.is_valid():
-            path = handle_func(request.FILES["file"], filetype_in, filetype_out)
-            filename = str(request.FILES["file"]).replace(filetype_in, filetype_out)
+            filename, filetype_in = os.path.splitext(str(request.FILES["file"]))
+            path = handle_func(request.FILES["file"], filetype_in[1:], filetype_out)
+            filename = filename + "." + filetype_out
             path = path[1].replace("/", "*")
             return render(
                 request,
@@ -49,10 +49,12 @@ def main_file_convert_handle(
 
 def docx2html(request):
 
-    return main_file_convert_handle(
-        request, handle_docx2html, "docx", "html", "docx2html"
-    )
+    return main_file_convert_handle(request, handle_docx2html, "docx", "docx2html")
 
 
 def html2pdf(request):
-    return main_file_convert_handle(request, handle_html2pdf, "html", "pdf", "html2pdf")
+    return main_file_convert_handle(request, handle_html2pdf, "pdf", "html2pdf")
+
+
+def video2avi(request):
+    return main_file_convert_handle(request, handle_video2avi, "avi", "video2avi")

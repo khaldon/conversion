@@ -1,26 +1,28 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+
+{% block content %}
 
 <form method="POST" class="post-form" enctype="multipart/form-data">
   {% csrf_token %}
+
   <div class="block">
     <h2>{% block title %}{{title}}{% endblock title %}</h2>
     <label for="images" class="drop-container">
       <span class="drop-title">Drop files here</span>
       or
-      <input type="file" id="images" accept=".{{file_type}}" name="file" required />
+      <input type="file" id="images" accept="{{file_type}}" name="file" required />
     </label>
     <input type="submit" class='button-5'  value="Start">
 
     {% if filename %}
-    <a href="{% url 'file' path filename %}">Download</a>
-
+    <a href="{% url 'file' path filename %}" id='download'>Download</a>
+    {% else %}
+    <span class="loader" id='loader'></span>
     {% endif %} 
 
- {% comment %}
-  '/home/mk/conversion/media/deedy_resume-word.html'
-  
- {% endcomment %}  
   </div>
 </form>
+
+
 
 {% endblock content %}

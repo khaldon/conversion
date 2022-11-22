@@ -1,6 +1,7 @@
 import os
 import pdfkit
 import mammoth
+import ffmpy
 
 
 def main_handle_file(f, type_convert_from, type_convert_to):
@@ -25,9 +26,9 @@ def handle_html2pdf(f, type_convert_from, type_convert_to):
     """
     handle_file = main_handle_file(f, type_convert_from, type_convert_to)
     file_pdf_path = handle_file[0]
-    file_out_path = handle_file[0]
+    file_out_path = handle_file[1]
     pdfkit.from_file(
-        handle_file[0], handle_file[1], options={"enable-local-file-access": ""}
+        file_pdf_path, file_out_path, options={"enable-local-file-access": ""}
     )
     return file_pdf_path, file_out_path
 
@@ -43,3 +44,12 @@ def handle_docx2html(f, type_convert_from, type_convert_to):
         out_file.write(html)
         out_file.close()
     return file_docx_path, file_out_path
+
+
+def handle_video2avi(f, type_convert_from, type_convert_to):
+    handle_file = main_handle_file(f, type_convert_from, type_convert_to)
+    file_video_path = handle_file[0]
+    file_out_path = handle_file[1]
+    ff = ffmpy.FFmpeg(inputs={file_video_path: None}, outputs={file_out_path: None})
+    ff.run()
+    return file_video_path, file_out_path
