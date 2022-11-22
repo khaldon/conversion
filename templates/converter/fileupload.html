@@ -12,16 +12,24 @@
       or
       <input type="file" id="images" accept="{{file_type}}" name="file" required />
     </label>
-    <input type="submit" class='button-5'  value="Start">
+    <input type="submit" class='button-5' id='start'  value="Start">
+    <span class="loader" id='loader'></span>
 
+    {% if request.POST %}
+    <span class="loader" id='loader' style="display:none"></span>
+    {% endif %}
+
+  
     {% if filename %}
     <a href="{% url 'file' path filename %}" id='download'>Download</a>
-    {% else %}
-    <span class="loader" id='loader'></span>
     {% endif %} 
 
   </div>
 </form>
+
+
+
+
 
 
 
