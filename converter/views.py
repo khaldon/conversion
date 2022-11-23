@@ -48,7 +48,6 @@ def main_file_convert_handle(request, handle_func, filetype_out, filename_templa
 
 
 def docx2html(request):
-
     return main_file_convert_handle(request, handle_docx2html, "docx", "docx2html")
 
 
@@ -58,3 +57,15 @@ def html2pdf(request):
 
 def video2avi(request):
     return main_file_convert_handle(request, handle_video2avi, "avi", "video2avi")
+
+
+def video2mp3(request):
+    return main_file_convert_handle(request, handle_video2avi, "mp3", "video2mp3")
+
+
+def video2mp4(request):
+    return main_file_convert_handle(request, handle_video2avi, "mp4", "video2mp4")
+
+
+def video2flv(request):
+    return main_file_convert_handle(request, handle_video2avi, "flv", "video2flv")
