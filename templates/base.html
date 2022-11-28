@@ -39,6 +39,7 @@
   const element = document.getElementById("start");
   const files = document.getElementById("images");
   const loader  = document.getElementById("loader")
+  const download  = document.getElementById('download')
   element.addEventListener("click", click);
   function click() {
     if (files.checkValidity()){
@@ -47,6 +48,7 @@
       loader.style.display = 'none';
 
     }
+    download.style.display  = 'none';
   }
 </script>
 </html>

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="row" style='margin:10px'>
+    <h2>Document converter</h2>
+</div>
 <div class="row" style="margin:10px">
     <div class="col">
         {% include 'card.html' with converter_name='html2pdf' title="HTML TO PDF Converter" %}
@@ -9,12 +12,16 @@
         {% include 'card.html' with converter_name='docx2html' title="DOCX to HTML Converter" %}
     </div>
     <div class="col">
-        {% include 'card.html' with converter_name='video2avi' title="Video to AVI Converter" %}
     </div>
     <div class="col">
-        {% include 'card.html' with converter_name='video2mp3' title="Video to MP3 Converter" %}
     </div>
+    
+    
+    
   </div>
+  <div class="row" style='margin:10px'>
+    <h2>Video converter</h2>
+</div>
   <div class="row" style='margin:10px'>
     <div class="col">
         {% include 'card.html' with converter_name='video2mp4' title="Video to MP4 Converter" %}
@@ -22,8 +29,18 @@
     <div class="col">
         {% include 'card.html' with converter_name='video2flv' title="Video to FLV Converter" %}
     </div>
-    <div class='col'></div>
-    <div class='col'></div>
-  <div class="row">
+    <div class="col">
+        {% include 'card.html' with converter_name='video2avi' title="Video to AVI Converter" %}
+    </div>
+    <div class="col">
+        {% include 'card.html' with converter_name='video2mp3' title="Video to MP3 Converter" %}
+    </div>
+  </div> 
+  <div class='row' style='margin:10px'>
+    <div class="col">
+        {% include 'card.html' with converter_name='video2wav' title="Video to WAV Converter" %}
+    </div>
+  </div>
+
 
 {% endblock content %}

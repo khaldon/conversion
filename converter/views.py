@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import os
-from .handle import handle_html2pdf, handle_docx2html, handle_video2avi
+from .handle import handle_html2pdf, handle_docx2html, handle_video2video
 from .forms import FileForm
 from django.views.generic import TemplateView
 from django.http import HttpResponse
@@ -56,16 +56,20 @@ def html2pdf(request):
 
 
 def video2avi(request):
-    return main_file_convert_handle(request, handle_video2avi, "avi", "video2avi")
+    return main_file_convert_handle(request, handle_video2video, "avi", "video2avi")
 
 
 def video2mp3(request):
-    return main_file_convert_handle(request, handle_video2avi, "mp3", "video2mp3")
+    return main_file_convert_handle(request, handle_video2video, "mp3", "video2mp3")
 
 
 def video2mp4(request):
-    return main_file_convert_handle(request, handle_video2avi, "mp4", "video2mp4")
+    return main_file_convert_handle(request, handle_video2video, "mp4", "video2mp4")
 
 
 def video2flv(request):
-    return main_file_convert_handle(request, handle_video2avi, "flv", "video2flv")
+    return main_file_convert_handle(request, handle_video2video, "flv", "video2flv")
+
+
+def video2wav(request):
+    return main_file_convert_handle(request, handle_video2video, "wav", "video2wav")

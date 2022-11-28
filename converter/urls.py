@@ -9,6 +9,7 @@ urlpatterns = [
     path("video_2_mp3/", views.video2mp3, name="video2mp3"),
     path("video_2_mp4/", views.video2mp4, name="video2mp4"),
     path("video_2_flv/", views.video2flv, name="video2flv"),
+    path("video_2_wav/", views.video2wav, name="video2wav"),
     path("file/<str:out_path>/<str:filename>", views.file_download, name="file"),
     path("", views.HomePage.as_view(), name="home"),
     path("all_tools/", views.AllTools.as_view(), name="all_tools"),
