@@ -48,7 +48,7 @@ def main_file_convert_handle(request, handle_func, filetype_out, filename_templa
 
 
 def docx2html(request):
-    return main_file_convert_handle(request, handle_docx2html, "docx", "docx2html")
+    return main_file_convert_handle(request, handle_docx2html, "html", "docx2html")
 
 
 def html2pdf(request):
