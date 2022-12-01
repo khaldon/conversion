@@ -4,7 +4,6 @@ from .handle import handle_html2pdf, handle_docx2html, handle_video2video
 from .forms import FileForm
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-import time
 
 
 class HomePage(TemplateView):
@@ -18,7 +17,7 @@ class AllTools(TemplateView):
 def file_download(request, out_path, filename):
     with open(out_path.replace("*", "/"), "rb") as f:
         data = f.read()
-    response = HttpResponse(data, content_type="application/pdf")
+    response = HttpResponse(data, content_type="application/octet-stream")
     response["Content-Disposition"] = 'attachment; filename="{0}"'.format(filename)
     return response
 
