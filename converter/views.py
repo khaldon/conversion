@@ -18,7 +18,7 @@ class AllTools(TemplateView):
 def file_download(request, out_path, filename):
     with open(out_path.replace("*", "/"), "rb") as f:
         data = f.read()
-    response = HttpResponse(data, content_type="text/html")
+    response = HttpResponse(data, content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="{0}"'.format(filename)
     return response
 
